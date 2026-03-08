@@ -4,8 +4,10 @@
 KIND (Kubernetes IN Docker) is a tool that allows you to run a local Kubernetes cluster using Docker containers instead of real servers. It is mainly used for learning, testing, and development.
 KIND creates Kubernetes nodes as Docker containers on your laptop. This allows you to quickly create and destroy Kubernetes clusters without needing multiple machines.
 
-# Setup WSL in your Laptop 
-## Requirements:
+# Step 1 : Configure WSL in your laptop
+  
+
+# Step 2: Setup WSL for Docker Desktop in your Laptop 
 
 ### Install Docker Desktop in your laptop
 
@@ -22,8 +24,8 @@ Then test:  docker run hello-world
 
 Once WSL and OL  setup is done . SETUP KIND  
 
-# SETUP KIND
-## STEP 1 — Install kubectl 
+# Step 2: SETUP KIND
+## Install kubectl 
 Inside WSL terminal Oracle Linux: 
 ```
   curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" 
@@ -32,18 +34,18 @@ Inside WSL terminal Oracle Linux:
   Verify: kubectl version --client
 ```
 
-## STEP 2 — Install KIND 
+## Install KIND 
 ```
   curl -Lo ./kind https://kind.sigs.k8s.io/dl/latest/kind-linux-amd64 
   chmod +x kind 
   sudo mv kind /usr/local/bin/kind
 ```
 
-## step 3 - Create cluster: 
+## Create cluster: 
   kind create cluster 
 This will create a single node cluster / or one single containe rthat contains  control plane and worke
 
-## Step 4 - verify 
+## verify with below command from your terminal 
 ```
   Verify: kubectl get nodes
 ```
