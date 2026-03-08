@@ -49,18 +49,11 @@ Single-node cluster:
 ```
 kind create cluster 
 ```
-Verify : 
-```
-kubectl get nodes 
-```
 This will Create Docker containers that behave like Kubernetes nodes . in this example we have created a single container where both the control plane and the one worker node is running . 
 
- 
+## verify the Nodes (container) with below command from your terminal 
+```
+  Verify: kubectl get nodes
+```
 
-kubectl get nodes 
 
-You should see: 
-
-kind-control-plane 
-kind-worker 
-kind-worker2 
