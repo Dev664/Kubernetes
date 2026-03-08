@@ -1,6 +1,9 @@
 # Now we want to create a cluster as we have seen in the Architectural digrame  with 2 worker node  and 1 control plane .
 # This will be done with KIND 
 
+![Uploading image.png…]()
+
+
 ## If you are doing the LAB on the same node  where you have craeted the single node cluster earlier clean up first :
 
  Check Existing Cluster  :  
