@@ -25,20 +25,26 @@ Once WSL and OL  setup is done . SETUP KIND
 # SETUP KIND
 ## STEP 1 — Install kubectl 
 Inside WSL terminal Oracle Linux: 
+```
   curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" 
   chmod +x kubectl 
   sudo mv kubectl /usr/local/bin/ 
-  Verify: kubectl version --client 
+  Verify: kubectl version --client
+```
 
 ## STEP 2 — Install KIND 
+```
   curl -Lo ./kind https://kind.sigs.k8s.io/dl/latest/kind-linux-amd64 
   chmod +x kind 
-  sudo mv kind /usr/local/bin/kind 
+  sudo mv kind /usr/local/bin/kind
+```
 
 ## step 3 - Create cluster: 
   kind create cluster 
 This will create a single node cluster / or one single containe rthat contains  control plane and worke
 
 ## Step 4 - verify 
-  Verify: kubectl get nodes 
+```
+  Verify: kubectl get nodes
+```
 
