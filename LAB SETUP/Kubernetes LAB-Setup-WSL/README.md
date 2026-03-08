@@ -42,11 +42,19 @@ Inside WSL terminal Oracle Linux:
   sudo mv kind /usr/local/bin/kind
 ```
 
-## Create cluster: 
-  kind create cluster 
-This will create a single node cluster / or one single containe rthat contains  control plane and worke
+## Create Cluster to test 
 
-## verify with below command from your terminal 
+Single-node cluster: 
+```
+kind create cluster 
+```
+Verify : 
+```
+kubectl get nodes 
+```
+This will Create Docker containers that behave like Kubernetes nodes . in this example we have created a single container where both the control plane and the one worker node is running .
+
+## verify the Nodes (container) with below command from your terminal 
 ```
   Verify: kubectl get nodes
 ```
