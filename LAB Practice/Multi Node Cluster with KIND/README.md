@@ -1,7 +1,9 @@
 # Now we want to create a cluster as we have seen in the Architectural digrame  with 2 worker node  and 1 control plane .
 # This will be done with KIND 
 
-![Uploading image.png…]()
+## Kubernetes Cluster Architecture
+<img width="1109" height="1067" alt="image" src="https://github.com/user-attachments/assets/44c35b92-16d5-4107-8b7a-2db92ed4fabf" />
+
 
 
 ## If you are doing the LAB on the same node  where you have craeted the single node cluster earlier clean up first :
