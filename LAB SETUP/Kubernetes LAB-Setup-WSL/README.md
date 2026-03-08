@@ -18,6 +18,7 @@ During installation: Select Use WSL 2 instead of Hyper-V
 Restart system if prompted. 
 
 Enable WSL Integration :  Open Docker Desktop → Settings → Resources → WSL Integration 
+
 Verify Installation  : WSL terminal
 docker --version 
 Then test:  docker run hello-world 
