@@ -53,7 +53,15 @@ This will Create Docker containers that behave like Kubernetes nodes . in this e
 
 ## verify the Nodes (container) with below command from your terminal 
 ```
-  Verify: kubectl get nodes
+verify the Cluster : kind get clusters
+Verify the nodes : kubectl get nodes
+```
+
+## clean up 
+To delete the cluster you created . 
+```
+kind delete cluster
+kind delete cluster --name KIND 
 ```
 
 
