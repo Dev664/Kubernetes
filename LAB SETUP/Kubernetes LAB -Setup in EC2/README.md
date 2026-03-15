@@ -47,7 +47,11 @@ kind --version
 
 Single-node cluster: 
 ```
-kind create cluster 
+kind create cluster
+
+# if you want to specify a name of your cluster. If you dont speciify by default your cluster name will be KIND 
+
+kind create cluster --name <cluster-name>
 ```
 This will Create Docker containers that behave like Kubernetes nodes . in this example we have created a single container where both the control plane and the one worker node is running . 
 
