@@ -32,7 +32,9 @@ nodes:
 ```
 ## Create the Multi-Node Cluster 
 ```
-kind create cluster --config kind-multi.yaml 
+kind create cluster --config kind-multi.yaml
+if you want to adda name :
+kind create cluster --name Cluster1 --config kind-multi.yaml
 ```
 ## Verify Nodes 
 ```
