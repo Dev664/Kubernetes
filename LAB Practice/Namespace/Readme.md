@@ -33,9 +33,44 @@ kubectl describe namespaces <name>
 ### With Commands 
 ```
 kubectl create namespace <insert-namespace-name-here> 
-kubectl create namespace dev
+kubectl create namespace test
 ```
 ### With YAML file 
 
-Create an YAML file
+Create an YAML file namespace.yaml
+```
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: dev
+```
+
+# LAB 3
+## create a pod under dev namespace with commands
+Assuming we have alredy two namespace (dev & test) from above practical : 
+```
+kubectl run nginx --image=nginx --namespace=<insert-namespace-name-here> 
+kubectl run nginx --image=nginx -n test 
+```
+# LAB 4 
+## create a pod under dev namespace with YAML
+
+After creating depod.yaml execute the below comamnd to craete and validate the pod under dev namespace 
+```
+kubectl apply -f devpod.yaml 
+kubectl get pods -n dev 
+kubectl get pods -n dev -o wide 
+```
+
+Create an YAML file devpod.yaml (check under Namespace)
+
+# LAB 5 
+## delete Namespace that you have created . 
+you can delete a namespace even if Pods or other resources are running inside it.When you delete a namespace, Kubernetes automatically deletes all resources inside that namespace. 
+```
+kubectl delete namespaces <Enter the namespace-name>
+kubectl delete –f  namespace.yaml 
+````
+
+
 
