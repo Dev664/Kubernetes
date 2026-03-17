@@ -102,10 +102,42 @@ start and enable kubelet
 
 ## Initialize Control Plane (in MASTER Node)
 
+** Copy the join command  that you will get  at the end of the below command o/p 
+keep it , it will be needed in the later staps 
 
 ```
 sudo kubeadm init --pod-network-cidr=192.168.0.0/16
 ```
+
+## Setup kubectl(in MASTER Node)
+
+```
+mkdir -p $HOME/.kube
+ cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+ chown $(id -u):$(id -g) $HOME/.kube/config
+```
+## Install CNI (to enable Networking)
+```
+kubectl apply -f https://docs.projectcalico.org/manifests/calico.yaml
+```
+## Join Worker Node to Cluster ( Run in Worker Node)
+
+```
+Execute the command that you will get  as mentuion in Initialize Control Plane (in MASTER Node)
+
+or , incase you missed it to copy 
+generate again on master:
+kubeadm token create --print-join-command
+
+or manually 
+sudo kubeadm join <MASTER-IP>:6443 --token <TOKEN> \
+--discovery-token-ca-cert-hash sha256:<HASH>
+```
+## Verify Cluster
+```
+kubectl get nodes
+```
+
 
 
 
