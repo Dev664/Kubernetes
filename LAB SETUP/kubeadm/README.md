@@ -68,6 +68,71 @@ yum install -y containerd
 mkdir -p /etc/containerd
 containerd config default | sudo tee /etc/containerd/config.toml
 ```
+Enable systemd cgroup
+```
+sed -i 's/SystemdCgroup = false/SystemdCgroup = true/' /etc/containerd/config.toml
+```
+restart and enable 
+```
+ systemctl restart containerd
+ systemctl enable containerd
+```
+## Install Kubernetes Components in master and worker both 
+
+configure the repo 
+```
+cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://pkgs.k8s.io/core:/stable:/v1.29/rpm/
+enabled=1
+gpgcheck=1
+gpgkey=https://pkgs.k8s.io/core:/stable:/v1.29/rpm/repodata/repomd.xml.key
+EOF
+```
+install kubelet kubeadm kubectl
+```
+ yum install -y kubelet kubeadm kubectl
+```
+start and enable kubelet
+```
+ systemctl enable kubelet
+ systemctl start kubelet
+```
+
+## Initialize Control Plane (in MASTER Node)
+
+
+```
+sudo kubeadm init --pod-network-cidr=192.168.0.0/16
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
