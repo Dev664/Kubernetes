@@ -35,7 +35,10 @@ Inserting image...
 # On master modify the hostname to identify 
 hostnamectl set-hostname k8s-master
 # On worker modify the hostname to identify 
-hostnamectl set-hostname k8s-worker  
+hostnamectl set-hostname k8s-worker
+
+#run to update the hostname
+exec bash
 
 ```
 ## Disable Swap
