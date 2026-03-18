@@ -140,6 +140,15 @@ sudo kubeadm join <MASTER-IP>:6443 --token <TOKEN> \
 ```
 kubectl get nodes
 ```
+## Start a pod to test the ckuster run in  master 
+```
+kubectl run mypod --image=nginx
+```
+## cleanup and delet ethe pod you created 
+
+```
+ubectl delete pod <pod name from get command>
+```
 
 
 
