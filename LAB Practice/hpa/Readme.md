@@ -25,8 +25,6 @@ Wait until:
 metrics-server-xxxxx   1/1   Running
 ```
 
-kubectl apply -f metrics-server/metrics-server-patch.yml
-
 kubectl top nodes
 
 kubectl top pods -A
