@@ -4,6 +4,14 @@
 ```
 kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
 
+```
+
+kubectl edit deployment metrics-server -n kube-system Update these lines under "args:"
+
+--kubelet-insecure-tls
+--kubelet-preferred-address-types=InternalIP,Hostname,ExternalIP
+```
+
 kubectl apply -f metrics-server/metrics-server-patch.yml
 
 kubectl top nodes
