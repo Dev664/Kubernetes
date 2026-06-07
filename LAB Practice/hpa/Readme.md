@@ -8,8 +8,21 @@ kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/late
 
 kubectl edit deployment metrics-server -n kube-system Update these lines under "args:"
 
---kubelet-insecure-tls
---kubelet-preferred-address-types=InternalIP,Hostname,ExternalIP
+```
+kubectl patch deployment metrics-server \
+-n kube-system \
+--type=json \
+-p='[{"op":"add","path":"/spec/template/spec/containers/0/args/-","value":"--kubelet-insecure-tls"}]'
+
+```
+restart:
+kubectl rollout restart deployment metrics-server -n kube-system
+
+Check pod status
+kubectl get pods -n kube-system -w
+
+Wait until:
+metrics-server-xxxxx   1/1   Running
 ```
 
 kubectl apply -f metrics-server/metrics-server-patch.yml
