@@ -2,6 +2,7 @@
 
 ## 1. Install Metrics Server
 kubectl apply -f https://github.com/kubernetes-sigs/metrics-server/releases/latest/download/components.yaml
+
 kubectl apply -f metrics-server/metrics-server-patch.yml
 kubectl top nodes
 kubectl top pods -A
