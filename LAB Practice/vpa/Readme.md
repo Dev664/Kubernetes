@@ -547,17 +547,6 @@ kubectl describe pod -n notes-ns
 
 ---
 
-# Difference Between HPA and VPA
-
-| HPA               | VPA                    |
-| ----------------- | ---------------------- |
-| Scales Pod Count  | Scales CPU/Memory      |
-| 1 Pod → 5 Pods    | 100m → 500m CPU        |
-| No Restart        | Pod Restart Required   |
-| Best for Web Apps | Best for Stateful Apps |
-
----
-
 # Cleanup
 
 Delete VPA:
@@ -580,32 +569,5 @@ cd autoscaler/vertical-pod-autoscaler
 ./hack/vpa-down.sh
 ```
 
----
 
-# Interview Questions
 
-### What is VPA?
-
-Vertical Pod Autoscaler automatically adjusts CPU and Memory requests based on actual usage.
-
-### What components does VPA install?
-
-* vpa-recommender
-* vpa-updater
-* vpa-admission-controller
-
-### What does VPA scale?
-
-CPU and Memory Requests.
-
-### Does VPA create more Pods?
-
-No.
-
-### Does VPA restart Pods?
-
-Yes.
-
-### Can HPA and VPA be used together?
-
-Generally not on the same CPU metric because they can conflict.
