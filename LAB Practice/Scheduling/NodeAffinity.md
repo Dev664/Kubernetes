@@ -237,9 +237,6 @@ kubectl get pod frontend-required
 Result:
 
 ```
-```
-
-```
 NAME                READY   STATUS
 frontend-required   0/1     Pending
 ```
@@ -259,13 +256,7 @@ Now let's say:
 Create:
 
 ```
-```
-
-```
 vi frontend-preferred.yaml
-```
-
-```
 ```
 
 ```
@@ -296,25 +287,16 @@ spec:
 Apply:
 
 ```
-```
-
-```
 kubectl apply -f frontend-preferred.yaml
 ```
 
 Check:
 
 ```
-```
-
-```
 kubectl get pod frontend-preferred -o wide
 ```
 
 The Scheduler prefers:
-
-```
-```
 
 ```
 role=webapp
@@ -331,16 +313,10 @@ but this is not mandatory.
 ### Required
 
 ```
-```
-
-```
 requiredDuringSchedulingIgnoredDuringExecution:
 ```
 
 Means:
-
-```
-```
 
 ```
 MUST satisfy
@@ -348,8 +324,6 @@ MUST satisfy
 
 Example:
 
-```
-```
 
 ```
 Frontend
@@ -365,16 +339,10 @@ role=webapp
 ### Preferred
 
 ```
-```
-
-```
 preferredDuringSchedulingIgnoredDuringExecution:
 ```
 
 Means:
-
-```
-```
 
 ```
 TRY to satisfy
@@ -382,8 +350,6 @@ TRY to satisfy
 
 Example:
 
-```
-```
 
 ```
 Frontend
@@ -409,16 +375,10 @@ Production scenario:
 Our Web Node has:
 
 ```
-```
-
-```
 role=webapp
 ```
 
 We can tell the Database Pod:
-
-```
-```
 
 ```
 Do NOT schedule me on role=webapp
@@ -429,15 +389,8 @@ Do NOT schedule me on role=webapp
 # 7. Create Database Pod
 
 ```
-```
-
-```
 vi database-anti-affinity.yaml
 ```
-
-```
-```
-
 ```
 apiVersion: v1
 kind: Pod
@@ -465,16 +418,11 @@ spec:
 Apply:
 
 ```
-```
-
-```
 kubectl apply -f database-anti-affinity.yaml
 ```
 
 Check:
 
-```
-```
 
 ```
 kubectl get pod database-anti-affinity -o wide
@@ -483,17 +431,11 @@ kubectl get pod database-anti-affinity -o wide
 It should use:
 
 ```
-```
-
-```
 multi-cluster-worker2
 role=backend
 ```
 
 and avoid:
-
-```
-```
 
 ```
 multi-cluster-worker
@@ -506,8 +448,6 @@ role=webapp
 
 This:
 
-```
-```
 
 ```
 operator: NotIn
@@ -516,9 +456,6 @@ values:
 ```
 
 means:
-
-```
-```
 
 ```
 role=webapp       → ❌
@@ -542,9 +479,6 @@ Let's make the scenario more realistic.
 We want:
 
 ```
-```
-
-```
 Frontend
     |
     ↓
@@ -554,16 +488,10 @@ Only WebApp Nodes
 Use:
 
 ```
-```
-
-```
 requiredDuringSchedulingIgnoredDuringExecution:
 ```
 
 with:
-
-```
-```
 
 ```
 role=webapp
@@ -578,15 +506,8 @@ In production we normally have a **Deployment**, not a standalone Pod.
 Create:
 
 ```
-```
-
-```
 vi frontend-deployment.yaml
 ```
-
-```
-```
-
 ```
 apiVersion: apps/v1
 kind: Deployment
@@ -627,16 +548,10 @@ spec:
 Apply:
 
 ```
-```
-
-```
 kubectl apply -f frontend-deployment.yaml
 ```
 
 Check:
-
-```
-```
 
 ```
 kubectl get pods -o wide
@@ -645,18 +560,12 @@ kubectl get pods -o wide
 You should see:
 
 ```
-```
-
-```
 frontend-xxxxx   Running   multi-cluster-worker
 frontend-xxxxx   Running   multi-cluster-worker
 frontend-xxxxx   Running   multi-cluster-worker
 ```
 
 All replicas are placed on:
-
-```
-```
 
 ```
 role=webapp
@@ -669,15 +578,8 @@ role=webapp
 Now create a Backend Deployment.
 
 ```
-```
-
-```
 vi backend-deployment.yaml
 ```
-
-```
-```
-
 ```
 apiVersion: apps/v1
 kind: Deployment
@@ -718,25 +620,17 @@ spec:
 Apply:
 
 ```
-```
-
-```
 kubectl apply -f backend-deployment.yaml
 ```
 
 Check:
 
-```
-```
 
 ```
 kubectl get pods -o wide
 ```
 
 You should get:
-
-```
-```
 
 ```
 NAME                        NODE
@@ -759,17 +653,12 @@ This is a very useful production example.
 Suppose you have:
 
 ```
-```
-
-```
 role=webapp
 zone=az1
 ```
 
 and:
 
-```
-```
 
 ```
 role=webapp
@@ -781,9 +670,6 @@ Your requirement could be:
 > MUST run on WebApp Nodes, but preferably run in AZ1.
 
 Then:
-
-```
-```
 
 ```
 affinity:
@@ -832,91 +718,13 @@ This is an excellent production explanation:
                 WebApp Node
 ```
 
----
-
-# PART 7 — IMPORTANT: POD ANTI-AFFINITY
-
-Now lets see something different.
-
-Suppose you have:
-
-```
-```
-
-```
-Frontend Deployment
-replicas: 3
-```
-
-You don't want all 3 replicas on the same Node.
-
-That's **Pod Anti-Affinity**, not Node Anti-Affinity.
-
-Example:
-
-```
-```
-
-```
-affinity:
-  podAntiAffinity:
-    preferredDuringSchedulingIgnoredDuringExecution:
-
-    - weight: 100
-      podAffinityTerm:
-        topologyKey: kubernetes.io/hostname
-
-        labelSelector:
-          matchExpressions:
-          - key: app
-            operator: In
-            values:
-            - frontend
-```
-
-Meaning:
-
-> Prefer not to place another `frontend` Pod on the same Node.
-
-Conceptually:
-
-```
-```
-
-```
-                 Frontend replicas
-
-              +-------------------+
-              |                   |
-              ↓                   ↓
-
-          Worker-1            Worker-2
-             |                    |
-         Frontend-1           Frontend-2
-                                  |
-                              Frontend-3
-```
-
-This improves availability.
-
-In a real production cluster with many Nodes, you can spread replicas across different Nodes/AZs.
-
----
-
-
 
 # 11. Cleanup Script
 
 Create:
 
 ```
-```
-
-```
 vi cleanup-affinity-lab.sh
-```
-
-```
 ```
 
 ```
@@ -964,16 +772,9 @@ echo "========================================"
 Make executable:
 
 ```
-```
-
-```
 chmod +x cleanup-affinity-lab.sh
 ```
-
 Run:
-
-```
-```
 
 ```
 ./cleanup-affinity-lab.sh
@@ -984,9 +785,6 @@ Run:
 ---
 
 # Final Workflow Flow
-
-```
-```
 
 ```
                 Kubernetes Scheduler
