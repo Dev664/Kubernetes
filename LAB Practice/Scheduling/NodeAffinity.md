@@ -2,8 +2,7 @@
 
 Assuming Our existing KIND cluster is:
 
-```
-```
+
 
 ```
 multi-cluster-control-plane
@@ -49,9 +48,6 @@ In a larger production cluster, we may have dedicated Nodes:
 Our KIND cluster has only **2 workers**, so we'll simulate this using:
 
 ```
-```
-
-```
 multi-cluster-worker
         ↓
 webapp / frontend
@@ -66,16 +62,10 @@ backend / db
 # 2. Verify again your Current Cluster
 
 ```
-```
-
-```
 kubectl get nodes
 ```
 
 Expected:
-
-```
-```
 
 ```
 NAME                          STATUS   ROLES
@@ -91,18 +81,11 @@ multi-cluster-worker2         Ready    <none>
 We'll use:
 
 ```
-```
-
-```
 role=webapp
 role=backend
 ```
 
 and additional application labels:
-
-```
-```
-
 ```
 app-tier=frontend
 app-tier=backend
@@ -111,8 +94,6 @@ app-tier=database
 
 ### Worker-1 → Web/Frontend
 
-```
-```
 
 ```
 kubectl label node multi-cluster-worker role=webapp
@@ -122,9 +103,6 @@ kubectl label node multi-cluster-worker app-tier=frontend
 ### Worker-2 → Backend/Database
 
 ```
-```
-
-```
 kubectl label node multi-cluster-worker2 role=backend
 kubectl label node multi-cluster-worker2 app-tier=backend
 ```
@@ -132,16 +110,10 @@ kubectl label node multi-cluster-worker2 app-tier=backend
 Check:
 
 ```
-```
-
-```
 kubectl get nodes -L role -L app-tier
 ```
 
 Expected:
-
-```
-```
 
 ```
 NAME                          role       app-tier
@@ -166,14 +138,9 @@ Requirement:
 
 ## 4. Create Frontend Pod
 
-```
-```
 
 ```
 vi frontend-required.yaml
-```
-
-```
 ```
 
 ```
@@ -202,16 +169,10 @@ spec:
 Apply:
 
 ```
-```
-
-```
 kubectl apply -f frontend-required.yaml
 ```
 
 Check:
-
-```
-```
 
 ```
 kubectl get pod frontend-required -o wide
@@ -220,17 +181,11 @@ kubectl get pod frontend-required -o wide
 Expected:
 
 ```
-```
-
-```
 NAME                STATUS    NODE
 frontend-required   Running   multi-cluster-worker
 ```
 
 Because:
-
-```
-```
 
 ```
 multi-cluster-worker
@@ -249,17 +204,11 @@ role=backend
 # 5. Now Change:
 
 ```
-```
-
-```
 values:
 - database
 ```
 
 There is no:
-
-```
-```
 
 ```
 role=database
@@ -270,25 +219,16 @@ Node.
 Delete:
 
 ```
-```
-
-```
 kubectl delete pod frontend-required
 ```
 
 Apply again:
 
 ```
-```
-
-```
 kubectl apply -f frontend-required.yaml
 ```
 
 Check:
-
-```
-```
 
 ```
 kubectl get pod frontend-required
