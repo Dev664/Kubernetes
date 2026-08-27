@@ -1,4 +1,4 @@
-# LAB: Node Affinity & Node Anti-Affinity
+# LAB: Node Affinity & (Node Anti-Affinity)
 
 Assuming Our existing KIND cluster is:
 
